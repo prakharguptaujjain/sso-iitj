@@ -10,7 +10,6 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -86,3 +85,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# LDAP Settings
+LDAP_SERVER = config("LDAP_SERVER")
+LDAP_SEARCHDN = config("LDAP_SEARCHDN")
+LDAP_SEARCHPW = config("LDAP_SEARCHPW")
+LDAP_BASEDN = config("LDAP_BASEDN")

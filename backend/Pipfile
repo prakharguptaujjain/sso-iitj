@@ -5,8 +5,11 @@ name = "pypi"
 
 [packages]
 django = "*"
-flake8-django = "*"
+djangorestframework = "*"
+pillow = "*"
 python-decouple = "*"
+flake8-django = "*"
+python-ldap = "*"
 
 [dev-packages]
 
