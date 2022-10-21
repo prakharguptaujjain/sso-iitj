@@ -37,6 +37,7 @@ jobs:
       working-directory: ./backend
       run: |
         sudo apt-get install libpq-dev 
+        sudo apt-get install libsasl2-dev python-dev libldap2-dev libssl-dev
         pip3 install coverage
         pip3 install pipenv
     - name: Linting
