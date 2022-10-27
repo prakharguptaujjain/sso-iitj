@@ -1,0 +1,13 @@
+{
+    "extends": [
+        "react-app",
+        "plugin:prettier/recommended"
+    ],
+    "rules": {
+        "quotes": [
+            "warn",
+            "single",
+            "avoid-escape"
+        ]
+    }
+}
