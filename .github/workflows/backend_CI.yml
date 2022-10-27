@@ -1,0 +1,61 @@
+name: Backend CI
+
+on: [push, pull_request]
+
+env:
+  DJANGO_SETTINGS_MODULE: sso_iitj.settings
+  DJANGO_SECRET_KEY: "django-insecure-*j#b_a9l@i$^9+m0bvn&ywj3dgz+w9_^k9564-%)&auhp4221e"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: ssoiitjuser
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: ssoiitjdb
+        ports:
+        # will assign a random free host port
+        - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Setup environment variables
+      run: |
+        cp .env.example .env
+        export DJANGO_SETTINGS_MODULE=sso_iitj.settings
+    - name: Install dependencies
+      working-directory: ./backend
+      run: |
+        sudo apt-get install libpq-dev 
+        sudo apt-get install libsasl2-dev python-dev libldap2-dev libssl-dev
+        pip3 install coverage
+        pip3 install pipenv
+    - name: Linting
+      working-directory: ./backend
+      run: |
+        pipenv install --dev
+        source "$(pipenv --venv)"/bin/activate
+        flake8 .
+    - name: Migrations
+      working-directory: ./backend
+      run: |
+        source "$(pipenv --venv)"/bin/activate
+        python manage.py makemigrations
+        python manage.py migrate
+    - name: Coverage
+      working-directory: ./backend
+      run: |
+        source "$(pipenv --venv)"/bin/activate
+        pip3 install coverage
+        coverage run --source='.' manage.py test
+  
