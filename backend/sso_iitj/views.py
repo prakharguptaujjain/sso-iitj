@@ -1,8 +1,18 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .ldap_login import LDAPAuth, LDAP_ERRORS
+from django.utils.decorators import method_decorator
+from django.utils.translation import gettext_lazy as _
+from drf_yasg.utils import swagger_auto_schema
+from .swagger import (
+    LoginAutoSchema
+)
 
 
+@method_decorator(name='post', decorator=swagger_auto_schema(
+    responses=LoginAutoSchema.responses(),
+    operation_id=_("Login and Get Token"),
+))
 class LoginAndGetUserData(APIView):
     def post(self, request, format=None):
         username = request.data.get('username')
