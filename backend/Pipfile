@@ -11,6 +11,7 @@ python-decouple = "*"
 flake8-django = "*"
 python-ldap = "*"
 djangorestframework-simplejwt = "*"
+drf-yasg = "*"
 
 [dev-packages]
 
