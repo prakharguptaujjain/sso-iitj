@@ -12,6 +12,7 @@ flake8-django = "*"
 python-ldap = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
+django-filter = "*"
 
 [dev-packages]
 

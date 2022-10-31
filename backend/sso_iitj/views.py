@@ -7,6 +7,8 @@ from drf_yasg.utils import swagger_auto_schema
 from .swagger import (
     LoginAutoSchema
 )
+from rest_framework_simplejwt.views import TokenObtainPairView
+from sso_iitj.serializer import MyTokenObtainPairSerializer, LDAPErrorSerializer
 
 
 @method_decorator(name='post', decorator=swagger_auto_schema(
@@ -32,3 +34,16 @@ class LoginAndGetUserData(APIView):
                 return Response(LDAP_ERRORS[err], status=403)
             elif err == 4:
                 return Response(LDAP_ERRORS[err], status=403)
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    def get_serializer_class(self):
+        username = self.request.data.get('username')
+        password = self.request.data.get('password')
+
+        ldap_auth = LDAPAuth()
+        ldap_data, err = ldap_auth.authenticate(username, password)
+        if ldap_data is not None:
+            return MyTokenObtainPairSerializer
+        else:
+            return LDAPErrorSerializer
