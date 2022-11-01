@@ -63,6 +63,6 @@ class LoginAutoSchema(SwaggerAutoSchema):
     def responses(cls):
         return {
             201: LoginResponseSerializer(),
-            400: "Bad Request",
-            401: "Unauthorized Request",
+            400: "No active account found with the given credentials! Please Register.",
+            403: "LDAP Authentication Failed",
         }
