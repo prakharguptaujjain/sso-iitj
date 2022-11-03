@@ -13,6 +13,7 @@ python-ldap = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
 django-filter = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
