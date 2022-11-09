@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './utils/ProtectedRoute';
 import StudentLogin from './views/studentLogin';
+import StudentRegister from './views/StudentRegister';
 import Dashboard from './views/Dashboard';
 
 function App() {
@@ -18,6 +19,15 @@ function App() {
               element={
                 <div>
                   <StudentLogin />
+                </div>
+              }
+            />
+            <Route
+              path="/register"
+              exact
+              element={
+                <div>
+                  <StudentRegister />
                 </div>
               }
             />
