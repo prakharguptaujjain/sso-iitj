@@ -99,3 +99,8 @@ class LDAPAuth:
 
     def authenticate(self, username, password):
         return self.ldap_auth(username, password)
+
+if __name__=='__main__':
+    ldap_auth = LDAPAuth()
+    username=input("Enter username: ")
+    ldap_auth.ldap_get_dn_data(username)

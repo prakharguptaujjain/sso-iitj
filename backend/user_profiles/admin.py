@@ -1,22 +1,30 @@
 from django.contrib import admin
-from user_profiles.models import ProgramAndBranch, StudentProfile
-
-
-@admin.register(ProgramAndBranch)
-class ProgramAndBranchAdmin(admin.ModelAdmin):
-    class Meta:
-        model = ProgramAndBranch
-        fields = '__all__'
-
+from user_profiles.models import StudentProfile
+from django.contrib.auth.models import User
 
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
-    readonly_fields = ['registration_timestamp', ]
-    list_display = ['__str__', 'roll_no', 'program_branch', 'year', 'registration_timestamp']
-    list_filter = ['program_branch', 'year', 'registration_timestamp']
-    ordering = ['roll_no', ]
-    search_fields = ['roll_no', 'user__first_name', 'user__last_name']
+    list_display = ('name', 'roll_no', 'mail', 'username','password','token','expiryTime')
+    search_fields = ('name', 'roll_no', 'mail', 'username')
+    list_filter = ('name', 'roll_no', 'mail')
+    ordering = ('name', 'roll_no', 'mail')
+    actions=['delete_selected']
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('username',)
+        return self.readonly_fields
 
-    class Meta:
-        model = StudentProfile
-        fields = '__all__'
+    def save_model(self, request, obj, form, change):
+        print("save_model called with the following parameters:")
+        print(f"request: {request}")
+        print(f"obj: {obj}")
+        print(f"form: {form}")
+        print(f"change: {change}")
+        if not change:
+            print("Creating new user:")
+            print(f"Username: {obj.username}")
+            print(f"Password: {obj.password}")
+            user = User.objects.create_user(username=obj.username, password=obj.password)
+            obj.user = user
+        super().save_model(request, obj, form, change)
+

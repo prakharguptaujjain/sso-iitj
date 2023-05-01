@@ -4,16 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-djangorestframework = "*"
-pillow = "*"
 python-decouple = "*"
-flake8-django = "*"
 python-ldap = "*"
-djangorestframework-simplejwt = "*"
-drf-yasg = "*"
-django-filter = "*"
-django-cors-headers = "*"
+djangorestframework = "*"
+django = "*"
 
 [dev-packages]
 
