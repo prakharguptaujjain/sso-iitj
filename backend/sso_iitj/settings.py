@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'user_profiles',
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -37,8 +36,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'sso_iitj.urls'
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
+    'http://192.168.204.129:8083',
 )
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SAMESITE = None
+CSRF_COOKIE_SAMESITE = None
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 
 TEMPLATES = [
     {
